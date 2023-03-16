@@ -1,0 +1,4 @@
+{
+	"name": "Yocto SDK for i.MX 8M Plus EVK",
+	"image": "ghcr.io/deepviewml/yocto-sdk:imx8mpevk-5.15.71-2.2.0"
+}

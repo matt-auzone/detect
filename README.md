@@ -31,13 +31,15 @@ The DeepView AI Middleware applications and libraries are intended to be easily 
 Install the Yocto SDK for VisionPack or a compatible Yocto toolchain, then compile with the following commands.
 
 ```shell
-source /opt/.../environment
+source /opt/yocto/environment
 make
 ```
 
 ## Visual Studio Code
 
-*TODO*
+The project includes a [Visual Studio Code][vscode] configuration which uses our [Yocto SDK for VisionPack][yocto-sdk] container to enable building AI Middleware applications for various supported targets.
+
+Open the project in Visual Studio Code on your desktop then select the "Open a Remote Window" option at the very bottom left of Visual Studio Code, next select "Reopen in Container".  When prompted to select a CMake kit, choose the appropriate "Yocto SDK for ..." option appropriate for your target.  Now you can work from Visual Studio Code and when building the application it will be correctly cross-compiled for the embedded Linux target platform.
 
 # Camera Stream
 
@@ -53,5 +55,6 @@ For other video formats simply adjust the GStreamer pipeline contained within vi
 
 [edgeai]: https://edgefirst.ai
 [zeromq]: https://zeromq.org
+[vscode]: https://code.visualstudio.com
 [webvision]: https://github.com/DeepViewML/webvision
 [yocto-sdk]: https://github.com/DeepViewML/yocto-sdk
