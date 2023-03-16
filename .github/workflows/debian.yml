@@ -32,7 +32,7 @@ jobs:
         apt-get -y install --no-install-recommends libvideostream-dev libvaal-dev libdeepview-rt-dev libzmq3-dev
 
     - name: Dependencies (aarch64)
-      if: matrix.arch == aarch64
+      if: matrix.arch == 'aarch64'
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
