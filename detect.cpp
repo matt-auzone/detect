@@ -29,7 +29,6 @@
 #include <string.h>
 #include <time.h>
 
-#include <deepview_rt.h>
 #include <vaal.h>
 #include <videostream.h>
 #include <zmq.h>
