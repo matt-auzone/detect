@@ -24,13 +24,15 @@ jobs:
       run: whoami
 
     - name: Dependencies
+      env:
+        DEBIAN_FRONTEND: noninteractive
       run: |
         apt-get update
-        apt-get install curl
+        apt-get -y install --no-install-recommends curl
         curl https://deepviewml.com/apt/key.pub | gpg --dearmor -o /usr/share/keyrings/deepviewml.gpg
         echo 'deb [signed-by=/usr/share/keyrings/deepviewml.gpg] https://deepviewml.com/apt stable main' > /etc/apt/sources.list.d/deepviewml.list
         apt-get update
-        apt-get install libvideostream-dev libvaal-dev libzmq3-dev
+        apt-get -y install --no-install-recommends libvideostream-dev libvaal-dev libzmq3-dev
 
     - name: Configure CMake
       run: cmake -Bbuild -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
