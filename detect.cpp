@@ -36,8 +36,6 @@
 #include "json.hpp"
 #include "zmq.hpp"
 
-#include "version.h"
-
 #define USEC_PER_SEC 1000000ll
 #define NSEC_PER_SEC (1000ll * USEC_PER_SEC)
 
