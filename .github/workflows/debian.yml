@@ -25,7 +25,7 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       run: |
         apt-get update
-        apt-get -y install --no-install-recommends ca-certificates curl gpg
+        apt-get -y install --no-install-recommends ca-certificates curl gpg make
         curl https://deepviewml.com/apt/key.pub | gpg --dearmor -o /usr/share/keyrings/deepviewml.gpg
         echo 'deb [signed-by=/usr/share/keyrings/deepviewml.gpg] https://deepviewml.com/apt stable main' > /etc/apt/sources.list.d/deepviewml.list
         apt-get update
@@ -36,7 +36,9 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        apt-get -y install gcc-aarch64-linux-gnu libvideostream:arm64 libvaal:arm64 libdeepview-rt:arm64
+        dpkg --add-architecture arm64
+        apt-get update
+        apt-get -y install gcc-aarch64-linux-gnu -o DPkg::options::="--force-overwrite" libvideostream:arm64 libvaal:arm64 libdeepview-rt:arm64 libzmq5:arm64
 
     - name: Build
       run: make CXX=${{ matrix.arch }}-linux-gnu-g++
