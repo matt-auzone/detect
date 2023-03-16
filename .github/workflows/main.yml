@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: debian:buster
+      image: gcc:10-buster
     steps:
     - uses: actions/checkout@v3
 
@@ -31,8 +31,10 @@ jobs:
         apt-get -y install --no-install-recommends ca-certificates curl gpg
         curl https://deepviewml.com/apt/key.pub | gpg --dearmor -o /usr/share/keyrings/deepviewml.gpg
         echo 'deb [signed-by=/usr/share/keyrings/deepviewml.gpg] https://deepviewml.com/apt stable main' > /etc/apt/sources.list.d/deepviewml.list
+        curl https://apt.kitware.com/keys/kitware-archive-latest.asc | gpg --dearmor - > /usr/share/keyrings/kitware-archive-keyring.gpg
+        echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ bionic main' > /etc/apt/sources.list.d/kitware.list
         apt-get update
-        apt-get -y install --no-install-recommends libvideostream-dev libvaal-dev libzmq3-dev
+        apt-get -y install --no-install-recommends cmake libvideostream-dev libvaal-dev libzmq3-dev
 
     - name: Configure CMake
       run: cmake -Bbuild -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
