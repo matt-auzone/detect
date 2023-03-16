@@ -38,7 +38,7 @@ jobs:
       run: |
         dpkg --add-architecture arm64
         apt-get update
-        apt-get install -y -o DPkg::options::="--force-overwrite" gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libvideostream:arm64 libvaal:arm64 libdeepview-rt:arm64 libzmq5:arm64
+        apt-get install -y -o DPkg::options::="--force-overwrite" gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libvideostream:arm64 libvaal:arm64 libdeepview-rt:arm64 libzmq5:arm64 libzmq3-dev:arm64
 
     - name: Build
       run: make CXX=${{ matrix.arch }}-linux-gnu-g++
