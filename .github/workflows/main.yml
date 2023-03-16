@@ -25,13 +25,15 @@ jobs:
 
     - name: Dependencies
       run: |
-        curl https://deepviewml.com/apt/key.pub | sudo gpg --dearmor -o /usr/share/keyrings/deepviewml.gpg
-        echo 'deb [signed-by=/usr/share/keyrings/deepviewml.gpg] https://deepviewml.com/apt stable main' | sudo tee /etc/apt/sources.list.d/deepviewml.list
-        sudo apt-get update
-        sudo apt-get install libvideostream-dev libvaal-dev libzmq3-dev
+        apt-get update
+        apt-get install curl
+        curl https://deepviewml.com/apt/key.pub | gpg --dearmor -o /usr/share/keyrings/deepviewml.gpg
+        echo 'deb [signed-by=/usr/share/keyrings/deepviewml.gpg] https://deepviewml.com/apt stable main' > /etc/apt/sources.list.d/deepviewml.list
+        apt-get update
+        apt-get install libvideostream-dev libvaal-dev libzmq3-dev
 
     - name: Configure CMake
-      run: cmake -B${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      run: cmake -Bbuild -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
     - name: Build
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      run: cmake --build build --config ${{env.BUILD_TYPE}}
