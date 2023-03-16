@@ -1,4 +1,4 @@
-name: Build
+name: Debian
 
 on:
   push:
@@ -12,16 +12,13 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [x86_64, aarch64]
     container:
-      image: gcc:10-buster
+      image: debian:buster
     steps:
     - uses: actions/checkout@v3
-
-    - name: Whereami
-      run: pwd
-
-    - name: Whoami
-      run: whoami
 
     - name: Dependencies
       env:
@@ -31,13 +28,15 @@ jobs:
         apt-get -y install --no-install-recommends ca-certificates curl gpg
         curl https://deepviewml.com/apt/key.pub | gpg --dearmor -o /usr/share/keyrings/deepviewml.gpg
         echo 'deb [signed-by=/usr/share/keyrings/deepviewml.gpg] https://deepviewml.com/apt stable main' > /etc/apt/sources.list.d/deepviewml.list
-        curl https://apt.kitware.com/keys/kitware-archive-latest.asc | gpg --dearmor - > /usr/share/keyrings/kitware-archive-keyring.gpg
-        echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ bionic main' > /etc/apt/sources.list.d/kitware.list
         apt-get update
-        apt-get -y install --no-install-recommends cmake libvideostream-dev libvaal-dev libzmq3-dev
+        apt-get -y install --no-install-recommends libvideostream-dev libvaal-dev libdeepview-rt-dev libzmq3-dev
 
-    - name: Configure CMake
-      run: cmake -Bbuild -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+    - name: Dependencies (aarch64)
+      if: matrix.arch == aarch64
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        apt-get -y install gcc-aarch64-linux-gnu libvideostream:arm64 libvaal:arm64 libdeepview-rt:arm64
 
     - name: Build
-      run: cmake --build build --config ${{env.BUILD_TYPE}}
+      run: make CXX=${{ matrix.arch }}-linux-gnu-g++
