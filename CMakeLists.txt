@@ -12,8 +12,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 include(Version)
 set(PROJECT_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 
-file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/version.h
-     "#define VERSION \"${PROJECT_VERSION}${VERSION_EXTRA}\"\n")
+add_definitions(-DVERSION=\"\")
 
 include(CTest)
 include(GenerateExportHeader)

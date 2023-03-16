@@ -11,4 +11,4 @@ detect: detect.cpp
 	$(CXX) $(CXXFLAGS) $(INC) $(VERSION) -o detect detect.cpp $(LIB)
 
 clean:
-	$(RM) detect version.h
+	$(RM) detect
