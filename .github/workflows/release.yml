@@ -1,0 +1,22 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Load Binary
+      id: detect
+      uses: actions/cache@v2
+      with:
+        path: detect
+        key: detect-${{ runner.arch }}-${{ github.sha }}
+        fail-on-cache-miss: true
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: detect

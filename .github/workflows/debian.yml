@@ -43,3 +43,10 @@ jobs:
 
     - name: Build
       run: make CXX=${{ matrix.arch }}-linux-gnu-g++
+
+    - name: Cache Binary
+      id: detect
+      uses: actions/cache@v2
+      with:
+        path: detect
+        key: detect-${{ runner.arch }}-${{ github.sha }}
