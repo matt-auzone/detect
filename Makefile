@@ -1,14 +1,15 @@
 CXX ?= g++
 CXXFLAGS ?= -O3 -Wall
+APP ?= detect
 VERSION ?= -DVERSION=\"$(shell git describe)\"
 
 INC := -Iext/include
 LIB := -lzmq -lvideostream -lvaal -ldeepview-rt
 
-all: detect
+all: $(APP)
 
-detect: detect.cpp
-	$(CXX) $(CXXFLAGS) $(INC) $(VERSION) -o detect detect.cpp $(LIB)
+$(APP): detect.cpp
+	$(CXX) $(CXXFLAGS) $(INC) $(VERSION) -o $(APP) detect.cpp $(LIB)
 
 clean:
-	$(RM) detect
+	$(RM) $(APP)

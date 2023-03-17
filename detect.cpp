@@ -134,8 +134,6 @@ handle_vsl(zmq::socket_t&        pub,
 {
     int     err;
     int64_t start;
-    size_t  sz  = 0;
-    char*   buf = NULL;
 
     /**
      * The vsl_frame_wait function will block until the next frame is received.
@@ -245,7 +243,7 @@ handle_vsl(zmq::socket_t&        pub,
         .boxes_ns  = boxes_ns,
     };
 
-    for (int i = 0; i < n_boxes; i++) {
+    for (size_t i = 0; i < n_boxes; i++) {
         const VAALBox* box   = &boxes[i];
         const char*    label = vaal_label(vaal, box->label);
 
