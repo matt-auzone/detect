@@ -48,7 +48,7 @@ jobs:
 
     - name: Cache Binary
       id: detect
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: detect-linux-${{ matrix.arch }}
         key: detect-${{ github.sha }}
