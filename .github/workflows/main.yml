@@ -45,26 +45,8 @@ jobs:
     - name: Build
       run: make CXX=${{ matrix.arch }}-linux-gnu-g++ APP=detect-linux-${{ matrix.arch }}
 
-    - name: Cache Binary
-      id: detect
-      uses: actions/cache@v3
-      with:
-        path: detect-linux-${{ matrix.arch }}
-        key: detect-${{ github.sha }}
-
-  publish:
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/')
-    needs: [build]
-    steps:
-    - name: Load Binary
-      id: detect
-      uses: actions/cache@v3
-      with:
-        path: detect-linux-x86_64, detect-linux-aarch64
-        key: detect-${{ github.sha }}
-        fail-on-cache-miss: true
     - name: Release
+      if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
-        files: detect-linux-x86_64, detect-linux-aarch64
+        files: detect-linux-${{ matrix.arch }}
