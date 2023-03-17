@@ -1,7 +1,7 @@
 CXX ?= g++
 CXXFLAGS ?= -O3 -Wall
 APP ?= detect
-VERSION ?= -DVERSION=\"$(shell git describe)\"
+VERSION ?= -DVERSION=\""$(shell git describe || cat VERSION)\""
 
 INC := -Iext/include
 LIB := -lzmq -lvideostream -lvaal -ldeepview-rt
