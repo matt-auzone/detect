@@ -8,6 +8,7 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    needs: Debian
     steps:
     - name: Load Binary
       id: detect
