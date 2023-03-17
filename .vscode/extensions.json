@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "ms-vscode.cpptools",
+        "webfreak.debug",
+        "ms-vscode.cmake-tools",
+        "spadin.memento-inputs"
+    ]
+}
