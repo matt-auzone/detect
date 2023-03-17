@@ -8,16 +8,16 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    needs: Debian
+    needs: [Debian]
     steps:
     - name: Load Binary
       id: detect
       uses: actions/cache@v3
       with:
-        path: detect
-        key: detect-${{ runner.arch }}-${{ github.sha }}
+        path: detect-linux-x86_64, detect-linux-aarch64
+        key: detect-${{ github.sha }}
         fail-on-cache-miss: true
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
-        files: detect
+        files: detect-linux-x86_64, detect-linux-aarch64
