@@ -1,7 +1,0 @@
-[
-    {
-        "name": "Yocto SDK for VisionPack",
-        "environmentSetupScript": "/opt/yocto/environment",
-        "toolchainFile": "/opt/yocto/sysroots/x86_64-pokysdk-linux/usr/share/cmake/OEToolchainConfig.cmake"
-    }
-]

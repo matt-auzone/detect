@@ -1,53 +1,67 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "build_debug",
+            "command": "make",
             "type": "shell",
-            "label": "gdbserver",
-            "command": "ssh",
-            "args": [
-                "root@${input:remoteTarget}",
-                "gdbserver localhost:9001 detect"
-            ],
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "group": "build",
-            "detail": "Starts the gdbserver and waits for success",
-            "isBackground": true,
+            "args": [],
             "problemMatcher": {
-                "pattern": [
-                    {
-                        "regexp": ".",
-                        "file": 1,
-                        "location": 2,
-                        "message": 3
-                    }
-                ],
-                "background": {
-                    "activeOnStart": true,
-                    "beginsPattern": "^.*Process*",
-                    "endsPattern": "^.*Listening*"
+                "base": "$gcc"
+            },
+            "options": {
+                "env": {
+                    "CFLAGS": "-g",
+                    "CXXFLAGS": "-g"
                 }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
             }
         },
-    ],
-    "inputs": [
         {
-            "id": "remoteTarget",
-            "type": "command",
-            "command": "memento.promptString",
-            "args": {
-                "id": "remoteTarget",
-                "description": "Remote Target Address"
-            }
+            "label": "build_release",
+            "command": "make",
+            "type": "shell",
+            "args": [],
+            "problemMatcher": {
+                "base": "$gcc"
+            },
+            "options": {
+                "env": {
+                    "CFLAGS": ""
+                }
+            },
+            "group": "build"
+        },
+        {
+            "label": "clean",
+            "command": "make",
+            "type": "shell",
+            "args": [
+                "clean"
+            ],
+            "problemMatcher": {
+                "base": "$gcc"
+            },
+            "group": "build"
+        },
+        {
+            "detail": "deploy application to work folder",
+            "label": "deploy",
+            "command": "make",
+            "args": [
+                "WORKDIR=${command:torizon.ccpp.getTargetFolder}",
+                "install"
+            ],
+            "type": "shell",
+            "group": "none"
         }
-    ]
+    ],
+    "options": {
+        "env": {
+            "TORIZON_PROP_ARG": "ARG SSHUSERNAME=#%application.username%#\n"
+        }
+    }
 }

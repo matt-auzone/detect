@@ -1,15 +1,21 @@
-CXX ?= g++
-CXXFLAGS ?= -O3 -Wall
-APP ?= detect
-VERSION ?= -DVERSION=\""$(shell git describe || cat VERSION)\""
+OBJS := detect.o
+LIBS := -lvaal
+CFLAGS := $(shell pkg-config --cflags gstreamer-1.0 gstreamer-base-1.0 gstreamer-plugins-base-1.0 gstreamer-video-1.0 gstreamer-allocators-1.0)
+LIBS += $(shell pkg-config --libs gstreamer-1.0 gstreamer-base-1.0 gstreamer-plugins-base-1.0 gstreamer-video-1.0 gstreamer-allocators-1.0)
 
-INC := -Iext/include
-LIB := -lzmq -lvideostream -lvaal -ldeepview-rt
+%.o : %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS) 
 
-all: $(APP)
+detect: $(OBJS)
+	dpkg -L libvaal
+	$(CC) -o $@ $^ $(LDFLAGS) $(LIBS)
 
-$(APP): detect.cpp
-	$(CXX) $(CXXFLAGS) $(INC) $(VERSION) -o $(APP) detect.cpp $(LIB)
+
+install: detect
+	mkdir -p $(WORKDIR)
+	cp detect $(WORKDIR)/
+
 
 clean:
-	$(RM) $(APP)
+	rm -f *.o
+	rm -f detect

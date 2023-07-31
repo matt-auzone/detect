@@ -1,0 +1,30 @@
+label: Makefile-based project
+detail: '$(terminal) Creates a minimal sample, with a standard makefile'
+tags:
+  - console
+  - wayland
+env:
+  AR: '%{torizon.prefix}ar'
+  AS: '%{torizon.prefix}as'
+  CC: '%{torizon.prefix}gcc'
+  CXX: '%{torizon.prefix}g++'
+  CPP: '%{torizon.prefix}cpp'
+  LD: '%{torizon.prefix}ld'
+  STRIP: '%{torizon.prefix}strip'
+  CROSS_COMPILE: '%{torizon.prefix}'
+checkfiles:
+  - Makefile
+  - makefile
+testing:
+  - title: debian
+    createCmd: torizon.createCCPPApp
+    projName: CCPPMakefile
+    platformDistroCodeName: bullseye
+    baseContainer: debian-no-ssh_bullseye
+    mainSourceFile: FreshNewCCPPMakefile.c
+    mainSourceFileBreakPoint: 7
+    programOutput: Hello World!
+    hasSDKContainer: true
+    stopOnEntry: false
+    messageOnTerminalConsole: true
+extversion: 1.6.5
