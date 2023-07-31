@@ -3,7 +3,9 @@ This code example demonstrates how to run general detection using VAAL. The C co
 
 # Contents
 [Workflow Documentation](#vaal-workflow)
+
 [GStreamer Documentation](#gstreamer-integration)
+
 [Quick Start](#quick-start)
 
 ## VAAL Workflow
